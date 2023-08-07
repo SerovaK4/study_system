@@ -3,6 +3,7 @@ from course.models import Course, Lesson
 from course.serializers import CourseSerializer, LessonSerializer
 
 
+
 class CourseViewSet(viewsets.ModelViewSet):
 
     serializer_class = CourseSerializer
@@ -11,6 +12,7 @@ class CourseViewSet(viewsets.ModelViewSet):
 
 class LessonCreateAPIView(generics.CreateAPIView):
     serializer_class = LessonSerializer
+    queryset = Lesson.objects.all()
 
 
 class LessonListView(generics.ListAPIView):
