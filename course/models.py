@@ -28,7 +28,7 @@ class Course(models.Model):
 class Lesson(models.Model):
     name = models.CharField(max_length=150, verbose_name='наименование')
     img = models.ImageField(upload_to='course/', verbose_name='превью', **NULLABLE)
-    description = models.TextField(verbose_name='описание',**NULLABLE)
+    description = models.TextField(verbose_name='описание', **NULLABLE)
     link_video = models.CharField(max_length=150, verbose_name='ссылка на видео',**NULLABLE)
     course = models.ForeignKey(Course, on_delete=models.SET_NULL, verbose_name='курс', **NULLABLE)
 
@@ -48,7 +48,7 @@ class Payment(models.Model):
     ]
 
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="пользователь")
-    data = models.DateTimeField(verbose_name="дата оплаты", default=timezone.now)
+    date_payment = models.DateTimeField(verbose_name="дата оплаты", default=timezone.now)
     course = models.ForeignKey(Course, on_delete=models.CASCADE, verbose_name="оплаченный курс", related_name='payment', **NULLABLE)
     lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE, verbose_name="оплаченный урок", related_name='payment', **NULLABLE)
     payment = models.FloatField(verbose_name="сумма оплаты")
