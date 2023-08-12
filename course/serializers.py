@@ -36,6 +36,7 @@ class CourseSerializer(serializers.ModelSerializer):
 
 class LessonCreateSerializer(serializers.ModelSerializer):
     payment = PaymentSerializer(many=True)
+
     class Meta:
         model = Lesson
         fields = "__all__"
