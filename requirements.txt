@@ -1,5 +1,6 @@
 psycopg2-binary
 pillow
-djangorestframework
+djangorestframework~=3.14.0
 python-dotenv
-django-filter
+django-filter~=23.2
+Django
