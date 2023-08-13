@@ -18,10 +18,10 @@ class LessonSerializer(serializers.ModelSerializer):
         model = Lesson
         fields = '__all__'
 
-        def get_last_payment(self, instance):
-            if instance.payment.all().first():
-                return instance.payment.all().first().payment
-            return 0
+    def get_last_payment(self, instance):
+        if instance.payment.all().first():
+            return instance.payment.all().first().payment
+        return 0
 
 
 class CourseSerializer(serializers.ModelSerializer):
