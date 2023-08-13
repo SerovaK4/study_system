@@ -18,7 +18,7 @@ urlpatterns = [
     path('update/<int:pk>/', LessonUpdateAPIView.as_view(), name='lesson-update'),
     path('delete/<int:pk>/', LessonDestroyAPIView.as_view(), name='lesson-delete'),
 
-                  # milage
+    # milage
     path('payment/create/', PaymentCreateAPIView.as_view(), name='payment-create'),
     path('lesson/payment/', LessonPaymentListAPIView.as_view(), name='payment-course'),
     path('payment/', PaymentListAPIView.as_view(), name='payment-list'),
