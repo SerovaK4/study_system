@@ -50,7 +50,7 @@ class CourseSerializer(serializers.ModelSerializer):
 
 
 class LessonCreateSerializer(serializers.ModelSerializer):
-    payment = PaymentSerializer(many=True)
+    payment = PaymentSerializer(many=True, read_only=True)
 
     class Meta:
         model = Lesson
