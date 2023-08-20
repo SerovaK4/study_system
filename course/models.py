@@ -57,6 +57,8 @@ class Payment(models.Model):
     payment = models.FloatField(verbose_name="сумма оплаты")
     payment_method = models.PositiveSmallIntegerField(choices=TITLE_PAYMENT_METHOD, default=1,
                                                       verbose_name='способ оплаты')
+    status = models.CharField(max_length=20, verbose_name="статус платежа", default="open")
+    payment_id = models.TextField(verbose_name="id платежа", **NULLABLE)
 
     def __str__(self):
         return f"{self.user}: {self.payment}"

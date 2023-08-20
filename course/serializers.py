@@ -17,6 +17,12 @@ class PaymentSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class PaymentCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Payment
+        fields = "__all__"
+
+
 class LessonSerializer(serializers.ModelSerializer):
     payment = PaymentSerializer(many=True, read_only=True)
     last_payment = serializers.SerializerMethodField(read_only=True)
