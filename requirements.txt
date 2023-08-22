@@ -1,8 +1,15 @@
 psycopg2-binary
 pillow
-djangorestframework~=3.14.0
+djangorestframework
 python-dotenv
-django-filter~=23.2
+django-filter
 Django
 djangorestframework-simplejwt
 coverage
+drf-yasg
+requests
+stripe
+redis
+celery
+eventlet
+django-celery-beat
