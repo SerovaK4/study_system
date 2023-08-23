@@ -15,7 +15,7 @@ def get_lesson_or_course(paid_lesson_id: int or None, paid_course_id: int or Non
     return Lesson.objects.get(pk=paid_lesson_id)
 
 
-def set_shedule():
+def set_schedule():
 
     schedule, created = IntervalSchedule.objects.get_or_create(
         every=1,
@@ -31,6 +31,7 @@ def set_shedule():
         }),
         expires=datetime.utcnow() + timedelta(seconds=30)
     )
+
 
 def get_email(user):
     emails = []
