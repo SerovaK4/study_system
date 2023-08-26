@@ -186,3 +186,10 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 SERVER_EMAIL = EMAIL_HOST_USER
 EMAIL_ADMIN = EMAIL_HOST_USER
 
+# Настройки для Celery
+CELERY_BEAT_SCHEDULE = {
+    'task-name': {
+        'task': 'course.tasks.block_user',
+        'schedule': timedelta(days=1),  # Выполнения задачи каждый день
+    },
+}
