@@ -1,23 +1,32 @@
-Задание 1
+# Docker
 
-Для сохранения уроков и курсов реализуйте дополнительную проверку на отсутствие в материалах ссылок на сторонние ресурсы, кроме youtube.com.
+Прежде чем вы сможете установить Docker Engine, вы должны сначала убедиться, что все конфликтующие пакеты удалены.
+## 1. Запустите следующую команду, чтобы удалить все конфликтующие пакеты:
 
-То есть ссылки на видео можно прикреплять в материалы, а ссылки на сторонние образовательные платформы или личные сайты нельзя.
+    $ for pkg in docker.io docker-doc docker-compose podman-docker containerd runc; do sudo apt-get remove $pkg; done
 
-Задание 2
 
-Добавьте модель подписки на обновления курса для пользователя.
 
-Вам необходимо реализовать эндпоинт для установки подписки пользователя и на удаление подписки у пользователя.
+## 2. Обновите и установите дополнительные пакеты:
+    sudo apt-get update
+    sudo apt-get install ca-certificates curl gnupg
 
-При этом при выборке данных по курсу пользователю необходимо присылать признак подписки текущего пользователя на курс. То есть давать информацию, подписан пользователь на обновления курса или нет.
+## 3. Обмен клюами с репозиториями:
 
-Задание 3
+    sudo install -m 0755 -d /etc/apt/keyrings
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+    sudo chmod a+r /etc/apt/keyrings/docker.gpg
 
-Реализуйте пагинацию для вывода всех уроков и курсов.
+## 4. Команда для настройки репозитория:
 
-Задание 4
+    echo \
+      "deb [arch="$(dpkg --print-architecture)" signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+      "$(. /etc/os-release && echo "$VERSION_CODENAME")" stable" | \
+      sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+    sudo apt-get update
 
-Напишите тесты, которые будут проверять корректность работы CRUD уроков и функционал работы подписки на обновления курса.
+## 5. Обновите список репозиториев:
 
-Сохраните результат проверки покрытия тестами.
+    sudo apt-get update
+
+
