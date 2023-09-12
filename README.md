@@ -29,4 +29,31 @@
 
     sudo apt-get update
 
+# Docker Compose
 
+## Команды для работы с контейнерами
+
+- Сборка образов
+
+    
+    docker-compose build
+
+- Запуск контейнеров
+  
+  
+    docker-compose up
+
+- Запуск контейнеров в фоне
+
+
+    docker-compose up -d
+
+- Сборка образа и запуск в фоне после успешной сборки
+  
+  
+    docker-compose up -d —build
+
+- Выполнение команды <command> внутри контейнера <app>
+  
+  
+    docker-compose exec <app> <command>
