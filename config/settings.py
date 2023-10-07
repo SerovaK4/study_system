@@ -10,21 +10,17 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 import os
-from datetime import timedelta
 from pathlib import Path
-
-from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-load_dotenv(BASE_DIR / '.env')
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY="django-insecure-@1#p_6k^hp0-)g+(r8p-6(cbi!!jk-gs(n+li=m8e20v60ezxm"
+SECRET_KEY = 'django-insecure-@1#p_6k^hp0-)g+(r8p-6(cbi!!jk-gs(n+li=m8e20v60ezxm'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -41,7 +37,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'drf_yasg',
     'rest_framework',
     'django_filters',
     'rest_framework_simplejwt',
@@ -56,7 +51,6 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    "corsheaders.middleware.CorsMiddleware",
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -93,8 +87,8 @@ DATABASES = {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": "study_system",
         "USER": "postgres",
-        "PASSWORD": "mysecretpassword",
-        "HOST": "db",
+        "PASSWORD": "123321",
+        "HOST": "localhost",
         "PORT": 5432
     }
 }
@@ -155,21 +149,8 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',
     ]
 }
-
-
-CORS_ALLOWED_ORIGINS = [
-    "https://read-only.example.com",
-    "https://read-and-write.example.com",
-] #адреса от фронтенда
-
-CSRF_TRUSTED_ORIGINS = [
-    "https://read-and-write.example.com",
-] #адреса от бекенда
-
-
-API_KEY=os.getenv("API_KEY")
-API_URL=os.getenv("API_URL")
-
+PAY_API_URL = os.getenv('PAY_API_URL')
+PAY_API_KEY = os.getenv('PAY_API_KEY')
 
 CELERY_BROKER_URL = "redis://127.0.0.1:6379/0"
 CELERY_RESULT_BACKEND = "redis://127.0.0.1:6379/0"
@@ -186,10 +167,21 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 SERVER_EMAIL = EMAIL_HOST_USER
 EMAIL_ADMIN = EMAIL_HOST_USER
 
-# Настройки для Celery
-CELERY_BEAT_SCHEDULE = {
-    'task-name': {
-        'task': 'course.tasks.block_user',
-        'schedule': timedelta(days=1),  # Выполнения задачи каждый день
-    },
-}
+
+# URL-адрес брокера сообщений
+CELERY_BROKER_URL = 'redis://localhost:6379' # Redis который по умолчанию работает на порту 6379
+
+# URL-адрес брокера результатов, также Redis
+CELERY_RESULT_BACKEND = 'redis://localhost:6379'
+
+# Часовой пояс для работы Celery
+CELERY_TIMEZONE = "Australia/Tasmania"
+
+# Флаг отслеживания выполнения задач
+CELERY_TASK_TRACK_STARTED = True
+
+# Максимальное время на выполнение задачи
+CELERY_TASK_TIME_LIMIT = 30 * 60
+
+
+ALLOWED_HOSTS=["*"]

@@ -1,59 +1,13 @@
-# Docker
+Задание 1
 
-Прежде чем вы сможете установить Docker Engine, вы должны сначала убедиться, что все конфликтующие пакеты удалены.
-## 1. Запустите следующую команду, чтобы удалить все конфликтующие пакеты:
+Настройте в проекте использование JWT-авторизации и закройте каждый эндпоинт авторизацией.
 
-    $ for pkg in docker.io docker-doc docker-compose podman-docker containerd runc; do sudo apt-get remove $pkg; done
+Задание 2
 
+Заведите группу модераторов и опишите для нее права работы с любыми уроками или курсами, но без возможности их удалять и создавать новые. Заложите функционал такой проверки в контроллеры.
 
+Задание 3
 
-## 2. Обновите и установите дополнительные пакеты:
-    sudo apt-get update
-    sudo apt-get install ca-certificates curl gnupg
+Опишите права доступа для объектов таким образом, чтобы пользователи, которые не входят в группу модераторов, могли видеть и редактировать только свои курсы и уроки.
 
-## 3. Обмен клюами с репозиториями:
-
-    sudo install -m 0755 -d /etc/apt/keyrings
-    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
-    sudo chmod a+r /etc/apt/keyrings/docker.gpg
-
-## 4. Команда для настройки репозитория:
-
-    echo \
-      "deb [arch="$(dpkg --print-architecture)" signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
-      "$(. /etc/os-release && echo "$VERSION_CODENAME")" stable" | \
-      sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-    sudo apt-get update
-
-## 5. Обновите список репозиториев:
-
-    sudo apt-get update
-
-# Docker Compose
-
-## Команды для работы с контейнерами
-
-- Сборка образов
-
-    
-    docker-compose build
-
-- Запуск контейнеров
-  
-  
-    docker-compose up
-
-- Запуск контейнеров в фоне
-
-
-    docker-compose up -d
-
-- Сборка образа и запуск в фоне после успешной сборки
-  
-  
-    docker-compose up -d —build
-
-- Выполнение команды <command> внутри контейнера <app>
-  
-  
-    docker-compose exec <app> <command>
+    Заводить группы лучше через админку и не реализовывать для этого дополнительных эндпоинтов.
