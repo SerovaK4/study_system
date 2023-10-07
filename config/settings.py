@@ -20,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-@1#p_6k^hp0-)g+(r8p-6(cbi!!jk-gs(n+li=m8e20v60ezxm'
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -41,8 +41,6 @@ INSTALLED_APPS = [
     'django_filters',
     'rest_framework_simplejwt',
     'django_celery_beat',
-
-
     'course',
     'users',
 
@@ -85,10 +83,10 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "study_system",
-        "USER": "postgres",
-        "PASSWORD": "123321",
-        "HOST": "localhost",
+        "NAME": os.getenv("POSTGRES_DB"),
+        "USER": os.getenv("POSTGRES_USER"),
+        "PASSWORD": os.getenv("POSTGRES_PASSWORD"),
+        "HOST": os.getenv("POSTGRES_HOST") or "localhost",
         "PORT": 5432
     }
 }
@@ -152,8 +150,6 @@ REST_FRAMEWORK = {
 PAY_API_URL = os.getenv('PAY_API_URL')
 PAY_API_KEY = os.getenv('PAY_API_KEY')
 
-CELERY_BROKER_URL = "redis://127.0.0.1:6379/0"
-CELERY_RESULT_BACKEND = "redis://127.0.0.1:6379/0"
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.yandex.ru'
@@ -169,13 +165,13 @@ EMAIL_ADMIN = EMAIL_HOST_USER
 
 
 # URL-адрес брокера сообщений
-CELERY_BROKER_URL = 'redis://localhost:6379' # Redis который по умолчанию работает на порту 6379
+CELERY_BROKER_URL = os.getenv('CELERY_BROKER_URL') # Redis который по умолчанию работает на порту 6379
 
 # URL-адрес брокера результатов, также Redis
-CELERY_RESULT_BACKEND = 'redis://localhost:6379'
+CELERY_RESULT_BACKEND = os.getenv('CELERY_RESULT_BACKEND')
 
 # Часовой пояс для работы Celery
-CELERY_TIMEZONE = "Australia/Tasmania"
+CELERY_TIMEZONE = os.getenv("CELERY_TIMEZONE")
 
 # Флаг отслеживания выполнения задач
 CELERY_TASK_TRACK_STARTED = True

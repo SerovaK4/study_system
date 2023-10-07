@@ -3,27 +3,25 @@ version: '3' # Версия docker-compose
 services:
   redis:
       image: redis:latest # Docker-образ для Redis
-      ports:
-        - "6379:6379" # Проброс портов: 6379 на хосте к 6379 в контейнере
 
   web:
     image: nginx:latest # Docker-образ для веб-сервера (здесь используется Nginx)
     ports:
-      - "80:80" # Проброс портов: 80 на хосте к 80 в контейнере
+      - "8001:80" # Проброс портов: 80 на хосте к 80 в контейнере
     volumes:
       - ./web:/usr/share/nginx/html # Монтируем локальную папку в контейнер
 
   db:
     image: postgres # Docker-образ для PostgreSQL
+
+    env_file:
+      - .env
+
     environment:
-      - POSTGRES_PASSWORD: mysecretpassword
-      - PGDATA=/var/lib/postgresql/data/pgdata
+      PGDATA: /var/lib/postgresql/data/pgdata
 
     volumes:
-      - pg_data:/var/lib/postgresql/data/pgdata # Монтируем volume для сохранения данных
-
-    ports:
-      - "5432:5432"
+      - postgres-data:/var/lib/postgresql/data/pgdata # Монтируем volume для сохранения данных
 
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U postgres" ]
@@ -36,7 +34,8 @@ services:
     build: .
     tty: true
     command:
-      - python3manage.py runserver 0.0.0.0:8000
+      - ./run.sh
+      - 0.0.0.0:8000
     ports:
       - "8000:8000" # Проброс портов: 8000 на хосте к 8000 в контейнере
 
@@ -46,13 +45,17 @@ services:
     volumes:
       - .:/code
     depends_on:
-      - db:
-          condition: service_healthy
+      db:
+        condition: service_healthy
 
   celery:
     build: .
     tty: true
     command: celery -A config worker -l INFO
+
+    env_file:
+      - .env
+
     depends_on:
       - redis
       - app # Зависимость от сервиса приложения
@@ -61,6 +64,10 @@ services:
     build: .
     tty: true
     command: celery -A config beat -l INFO -S django
+
+    env_file:
+      - .env
+
     depends_on:
       - redis
       - app # Зависимость от сервиса приложения
